@@ -1,7 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {LoginComponent} from './login/login.component';
-import {GameViewComponent} from './game-view/game-view.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LoginComponent} from './components/login/login.component';
+import {GameViewComponent} from './components/game-view/game-view.component';
+import {AuthGuard} from './service/auth.guard';
+import {CreateGameComponent} from './components/create-game/create-game.component';
 
 const routes: Routes = [
   // Fallback route if logged in
@@ -18,7 +20,11 @@ const routes: Routes = [
     ]
   },*/
   {path: 'login', component: LoginComponent},
-  {path: 'games', component: GameViewComponent},
+    {
+        path: 'games', component: GameViewComponent, canActivate: [AuthGuard], children: [
+            {path: 'create', component: CreateGameComponent},
+        ]
+    },
   // Fallback route if not logged in
   {path: '**', redirectTo: 'login'}
 ];

@@ -1,0 +1,22 @@
+<div class="gameViewContainer">
+	<div id="itemContainer">
+		<div class="nes-container with-title is-rounded">
+			<p class="title">Games</p>
+			<div id="gamesWrapper">
+				<div (click)="joinGame(g)" *ngFor="let g of this.games" class="gameItem nes-container is-centered">
+					{{g.gameID}}
+				</div>
+			</div>
+		</div>
+		<p *ngIf="!createGameCheck">
+			<button (click)="createGame()" class="nes-btn is-warning" type="button">Create Game</button>
+		</p>
+
+	</div>
+	<div id="routerWrapper">
+		<router-outlet></router-outlet>
+	</div>
+</div>
+
+
+

@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {environment} from '../../environments/environment';
+import {StatusMessage} from '../classes/status-message';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +14,7 @@ export class SocketService {
     //  chatEmitter: EventEmitter<ChatMessage> = new EventEmitter(true);
 
     @Output()
-    //  statusEmitter: EventEmitter<StatusMessage> = new EventEmitter(true);
+    statusEmitter: EventEmitter<StatusMessage> = new EventEmitter(true);
     @Output()
     infoEmitter: EventEmitter<string> = new EventEmitter(true);
 
@@ -45,9 +45,17 @@ export class SocketService {
         console.log('onmessage');
         console.log('Received: ' + ev.data);
         const object = JSON.parse(ev.data);
-        if (object.games != null) {
-            console.log(object.games.length);
-            this.infoEmitter.emit(object);
+
+
+        if (object.type === 'games') {
+            if (object.games != null) {
+                console.log(object.games.length);
+                this.infoEmitter.emit(object);
+            }
+        }
+        if (object.type === 'status') {
+            const statusmessage: StatusMessage = new StatusMessage(object.code, object.message);
+            this.statusEmitter.emit(statusmessage);
         }
         /*    const message = <Message> JSON.parse(ev.data);
 

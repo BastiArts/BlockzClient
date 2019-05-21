@@ -1,4 +1,4 @@
-import { BlockzUser } from './blockz-user';
+import {BlockzUser} from './blockz-user';
 
 describe('BlockzUser', () => {
   it('should create an instance', () => {

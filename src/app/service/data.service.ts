@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {BlockzUser} from '../blockz-user';
+import {Injectable} from '@angular/core';
+import {BlockzUser} from '../classes/blockz-user';
 
 @Injectable({
   providedIn: 'root'

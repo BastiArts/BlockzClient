@@ -1,0 +1,12 @@
+<div class="nes-container is-dark with-title">
+	<p class="title">Create Game</p>
+	<div class="nes-field">
+		<label for="game_field">GameID</label>
+		<input [(ngModel)]="dataService.blockzUser.game" class="nes-input" id="game_field" placeholder="MySuperGame"
+			   type="text">
+		<p>
+			<button (click)="createGame()" class="nes-btn is-warning" type="button">Create</button>
+			<span class="nes-text is-error">{{this.infoText}}</span>
+		</p>
+	</div>
+</div>
