@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SocketService} from '../../service/socket.service';
 import {Game} from '../../classes/game';
 import {Router} from '@angular/router';
+import {DataService} from '../../service/data.service';
 
 @Component({
     selector: 'app-game-view',
@@ -10,9 +11,9 @@ import {Router} from '@angular/router';
 })
 export class GameViewComponent implements OnInit {
     games: Array<Game>;
-    createGameCheck: boolean = false;
+    createGameCheck = false;
 
-    constructor(private socketService: SocketService, private router: Router) {
+    constructor(private dataservice: DataService, private socketService: SocketService, private router: Router) {
     }
 
     ngOnInit() {
@@ -33,5 +34,7 @@ export class GameViewComponent implements OnInit {
     joinGame(game: Game) {
         // Join Game logic
         this.socketService.send(JSON.parse('{"type": "join", "game": "' + game.gameID + '"}'));
+        this.dataservice.blockzUser.game = game.gameID;
+        this.router.navigateByUrl('game');
     }
 }

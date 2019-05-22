@@ -1,5 +1,6 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {StatusMessage} from '../classes/status-message';
+import {GameConfig} from '../classes/game-config';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class SocketService {
     connectionEmitter: EventEmitter<boolean> = new EventEmitter(true);
 
     @Output()
-    //  chatEmitter: EventEmitter<ChatMessage> = new EventEmitter(true);
+    gameEmitter: EventEmitter<GameConfig> = new EventEmitter(true);
 
     @Output()
     statusEmitter: EventEmitter<StatusMessage> = new EventEmitter(true);
@@ -45,27 +46,24 @@ export class SocketService {
         console.log('onmessage');
         console.log('Received: ' + ev.data);
         const object = JSON.parse(ev.data);
-
-
-        if (object.type === 'games') {
-            if (object.games != null) {
-                console.log(object.games.length);
-                this.infoEmitter.emit(object);
-            }
+        switch (object.type) {
+            case 'games':
+                if (object.games != null) {
+                    console.log(object.games.length);
+                    this.infoEmitter.emit(object);
+                }
+                break;
+            case 'status':
+                this.statusEmitter.emit(new StatusMessage(object.code, object.message));
+                break;
+            case 'gameConfig':
+                // TODO SOLLTE EIG VOM SERVER MIT SENDOBJECT gesendet werden, geht aber wegen dem JSON.Parse oben nicht
+                this.gameEmitter.emit();
+                break;
+            default:
+                break;
         }
-        if (object.type === 'status') {
-            const statusmessage: StatusMessage = new StatusMessage(object.code, object.message);
-            this.statusEmitter.emit(statusmessage);
-        }
-        /*    const message = <Message> JSON.parse(ev.data);
 
-            if (message.type === 'chat') {
-                this.chatEmitter.emit(<ChatMessage> message);
-            } else if (message.type === 'status') {
-                this.statusEmitter.emit(<StatusMessage> message);
-            } else {
-                console.error('Could not interpret message');
-            }*/
     }
 
     onError(ev) {
