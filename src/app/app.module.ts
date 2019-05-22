@@ -9,20 +9,23 @@ import {SocketService} from './service/socket.service';
 import {GameViewComponent} from './components/game-view/game-view.component';
 import {CreateGameComponent} from './components/create-game/create-game.component';
 import {AuthGuard} from './service/auth.guard';
+import {GameComponent} from './components/game/game.component';
+import {GameGuard} from './service/game.guard';
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
         GameViewComponent,
-        CreateGameComponent
+        CreateGameComponent,
+        GameComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         AppRoutingModule
     ],
-    providers: [DataService, SocketService, AuthGuard],
+    providers: [DataService, SocketService, AuthGuard, GameGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {

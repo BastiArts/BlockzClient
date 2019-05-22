@@ -1,5 +1,5 @@
 <div class="gameViewContainer">
-	<div id="itemContainer">
+	<div [style.top]="createGameCheck ? '40vh': '0'" id="itemContainer">
 		<div class="nes-container with-title is-rounded">
 			<p class="title">Games</p>
 			<div id="gamesWrapper">
@@ -13,7 +13,7 @@
 		</p>
 
 	</div>
-	<div id="routerWrapper">
+	<div *ngIf="createGameCheck" id="routerWrapper">
 		<router-outlet></router-outlet>
 	</div>
 </div>

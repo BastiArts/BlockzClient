@@ -4,21 +4,17 @@ import {LoginComponent} from './components/login/login.component';
 import {GameViewComponent} from './components/game-view/game-view.component';
 import {AuthGuard} from './service/auth.guard';
 import {CreateGameComponent} from './components/create-game/create-game.component';
+import {GameComponent} from './components/game/game.component';
+import {GameGuard} from './service/game.guard';
 
 const routes: Routes = [
   // Fallback route if logged in
   {path: '', redirectTo: 'login', pathMatch: 'full'},
- /* {
-    path: 'game', component: DashboardComponent, canActivate: [AuthService], children: [
-      // {path: '', component: this.dataservice.sessionUser.isStudent ? DefaultDashboardComponent : TeacherDashboardComponent},
-      {path: '', component: DefaultDashboardComponent},
-      {path: 'equipment', component: EquipmentOverviewComponent}, // NOTE: DELETE EQUIPMENT COMPONENT
-      {path: 'logout', component: LogoutComponent},
-      {path: 'profil', component: ProfileComponent},
-      {path: 'settings', component: SettingsComponent},
-      {path: '**', redirectTo: 'dashboard'}
+    {
+        path: 'game', component: GameComponent, canActivate: [GameGuard], children: [
+            {path: '**', redirectTo: 'game'}
     ]
-  },*/
+    },
   {path: 'login', component: LoginComponent},
     {
         path: 'games', component: GameViewComponent, canActivate: [AuthGuard], children: [
