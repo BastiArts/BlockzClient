@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.socketService.connect('ws://localhost:8025/websockets/blockz');
+        this.socketService.connect('ws://192.168.137.1:8025/websockets/blockz');
 
     }
 

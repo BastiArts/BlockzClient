@@ -1,8 +1,8 @@
 import {BlockzPlayer} from './blockz-player';
-import * as THREE from 'three';
+import {Block} from './block';
 
 export class GameConfig {
-    constructor(public gameID: string, public players: Array<BlockzPlayer>, public scene: THREE.Scene) {
+    constructor(public gameID: string, public players: Array<BlockzPlayer>, public cubes: Array<Block>) {
 
     }
 }

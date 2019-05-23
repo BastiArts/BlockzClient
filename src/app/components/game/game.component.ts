@@ -16,6 +16,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     // SCENE CONFIG
     @ViewChild('blockzRender') rendererContainer: ElementRef;
     private players: Array<BlockzPlayer> = [];
+    public cubes: Array<Block> = new Array<Block>();
     private currentPlayer: BlockzPlayer = new BlockzPlayer(this.dataservice.blockzUser);
     private isSpacePressed: boolean = false;
     private width: number = window.innerWidth;
@@ -23,12 +24,16 @@ export class GameComponent implements OnInit, AfterViewInit {
     private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({antialias: true});
     private scene: THREE.Scene = new THREE.Scene();
     private camera: THREE.Camera = null;
+    private controls;
 
     constructor(public dataservice: DataService, private socketService: SocketService) {
     }
 
     ngOnInit() {
         this.players.push(this.currentPlayer);
+        this.socketService.gameEmitter.subscribe((gc: GameConfig) => {
+            this.updateScene(gc);
+        });
         this.initBasicScene();
     }
 
@@ -64,6 +69,7 @@ export class GameComponent implements OnInit, AfterViewInit {
                 this.camera.position.z += -Math.cos(this.camera.rotation.y) * this.currentPlayer.speed;
                 break;
             case ' ': // SPACE KEY
+                this.controls.enabled = true;
                 this.isSpacePressed = true;
                 break;
             // Keyboard turn inputs
@@ -79,8 +85,6 @@ export class GameComponent implements OnInit, AfterViewInit {
         // Keyboard movement inputs
         this.currentPlayer.position = this.camera.position;
         this.render();
-        this.socketService.send(JSON.parse('{"type": "update", "game": "' + this.currentPlayer.game + '", "players": "'
-            + this.players.toString() + '", "scene": "' + this.scene.toJSON() + '"}'));
     }
 
     private initBasicScene(): void {
@@ -103,7 +107,9 @@ export class GameComponent implements OnInit, AfterViewInit {
         this.scene.add(floor);
 
         // Adds the cool Camera control with Space + Drag
-        const controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enabled = false;
+
     }
 
     private render(): void {
@@ -122,15 +128,30 @@ export class GameComponent implements OnInit, AfterViewInit {
         if (!this.isSpacePressed) {
             const cube = new THREE.Mesh(new THREE.BoxBufferGeometry(5, 5, 5), new THREE.MeshLambertMaterial({color: 0xfeb74c}));
             cube.position.add(new THREE.Vector3(this.camera.position.x / 2, 0, this.camera.position.z / 2));
-            this.currentPlayer.cubes.push(new Block(this.currentPlayer, cube));
+            this.cubes.push(new Block(this.currentPlayer, this.currentPlayer.color, cube.position.x, cube.position.y, cube.position.z));
             this.scene.add(cube);
             this.render();
+            this.socketService.send(JSON.parse('{"type": "update", "game": "' + this.currentPlayer.game + '", "players": '
+                + JSON.stringify(this.players) + ', "cubes": ' + JSON.stringify(this.cubes) + '}'));
+        } else {
+            return false;
         }
     }
 
     // Method for updating the Scene
     private updateScene(gameConfig: GameConfig) {
-        this.scene = gameConfig.scene;
+        this.players = gameConfig.players;
+        this.cubes = gameConfig.cubes;
+        this.cubes.forEach(c => {
+            if (c.owner !== this.currentPlayer) {
+                const cube = new THREE.Mesh(
+                    new THREE.BoxBufferGeometry(5, 5, 5),
+                    new THREE.MeshLambertMaterial({color: c.color})
+                );
+                cube.position.set(c.x, c.y, c.z);
+                this.scene.add(cube);
+            }
+        });
         this.render();
     }
 }

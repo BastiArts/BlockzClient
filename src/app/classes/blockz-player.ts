@@ -1,5 +1,4 @@
 import {BlockzUser} from './blockz-user';
-import {Block} from './block';
 
 export class BlockzPlayer {
     public username: string;
@@ -8,7 +7,7 @@ export class BlockzPlayer {
     public turnSpeed = Math.PI * 0.02;
     public speed = 1; // 0.2
     public position = {};
-    public cubes: Array<Block> = new Array<Block>();
+    public color = 0xfeb74c;
 
     constructor(blockzuser: BlockzUser) {
         this.username = blockzuser.username;

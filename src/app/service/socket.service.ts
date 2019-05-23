@@ -19,6 +19,9 @@ export class SocketService {
     @Output()
     infoEmitter: EventEmitter<string> = new EventEmitter(true);
 
+    constructor() {
+    }
+
     connect(uri: string) {
         this.ws = new WebSocket(uri);
         this.ws.onopen = () => this.onOpen();
@@ -56,9 +59,8 @@ export class SocketService {
             case 'status':
                 this.statusEmitter.emit(new StatusMessage(object.code, object.message));
                 break;
-            case 'gameConfig':
-                // TODO SOLLTE EIG VOM SERVER MIT SENDOBJECT gesendet werden, geht aber wegen dem JSON.Parse oben nicht
-                this.gameEmitter.emit();
+            case 'update':
+                this.gameEmitter.emit(new GameConfig(object.game, object.players, object.cubes));
                 break;
             default:
                 break;
@@ -78,7 +80,4 @@ export class SocketService {
         this.ws.send(jsonStr);
     }
 
-
-    constructor() {
-    }
 }
