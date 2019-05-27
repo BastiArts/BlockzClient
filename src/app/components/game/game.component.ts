@@ -15,10 +15,10 @@ import {Block} from '../../classes/block';
 export class GameComponent implements OnInit, AfterViewInit {
     // SCENE CONFIG
     @ViewChild('blockzRender') rendererContainer: ElementRef;
-    private players: Array<BlockzPlayer> = [];
+    public players: Array<BlockzPlayer> = [];
     public cubes: Array<Block> = new Array<Block>();
     private currentPlayer: BlockzPlayer = new BlockzPlayer(this.dataservice.blockzUser);
-    private isSpacePressed: boolean = false;
+    private isSpacePressed = false;
     private width: number = window.innerWidth;
     private height: number = window.innerHeight;
     private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({antialias: true});
@@ -26,7 +26,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     private camera: THREE.Camera = null;
     private controls;
 
-    constructor(public dataservice: DataService, private socketService: SocketService) {
+    constructor(private dataservice: DataService, private socketService: SocketService) {
     }
 
     ngOnInit() {
@@ -49,7 +49,6 @@ export class GameComponent implements OnInit, AfterViewInit {
     @HostListener('window:keypress', ['$event'])
     public move(event: KeyboardEvent) {
         // requestAnimationFrame(this.move);
-        console.log('TRIGGERED');
         event.preventDefault();
         switch (event.key) {
             case 'w':
