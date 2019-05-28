@@ -34,6 +34,7 @@ export class GameComponent implements OnInit, AfterViewInit {
         this.socketService.gameEmitter.subscribe((gc: GameConfig) => {
             this.updateScene(gc);
         });
+
         this.initBasicScene();
     }
 
@@ -141,6 +142,22 @@ export class GameComponent implements OnInit, AfterViewInit {
     private updateScene(gameConfig: GameConfig) {
         this.players = gameConfig.players;
         this.cubes = gameConfig.cubes;
+        // Reset the scene
+        this.scene = new THREE.Scene();
+        // Add a light
+        const light = new THREE.AmbientLight(0x404040);
+        light.position.set(-15, -15, -15);
+        // Add the floor
+        const floor = new THREE.Mesh(
+            new THREE.PlaneGeometry(1000, 1000, 100, 100),
+            new THREE.MeshBasicMaterial({color: 0x000000, wireframe: true}
+            ));
+        floor.rotation.x -= Math.PI / 2;
+
+        // Add the Objects to the scene
+        this.scene.add(light);
+        this.scene.add(floor);
+
         this.cubes.forEach(c => {
             if (c.owner !== this.currentPlayer) {
                 const cube = new THREE.Mesh(

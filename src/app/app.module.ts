@@ -11,6 +11,7 @@ import {CreateGameComponent} from './components/create-game/create-game.componen
 import {AuthGuard} from './service/auth.guard';
 import {GameComponent} from './components/game/game.component';
 import {GameGuard} from './service/game.guard';
+import {LobbyComponent} from './components/draw/lobby/lobby.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import {GameGuard} from './service/game.guard';
         LoginComponent,
         GameViewComponent,
         CreateGameComponent,
-        GameComponent
+        GameComponent,
+        LobbyComponent
     ],
     imports: [
         BrowserModule,

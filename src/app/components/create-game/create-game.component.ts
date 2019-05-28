@@ -19,14 +19,26 @@ export class CreateGameComponent implements OnInit {
     }
 
     createGame() {
-        this.socketService.send(JSON.parse('{"type": "createGame", "game": "' + this.dataService.blockzUser.game.replace(' ', '-') + '"}'));
-        this.socketService.statusEmitter.subscribe((message: StatusMessage) => {
-            if (message.statusCode === 199) { // See the status codes in StatusMessage.ts
-                this.infoText = '';
-                this.router.navigateByUrl('game');
-            } else {
-                this.infoText = message.message;
-            }
-        });
+        if (this.dataService.chosenGame === 'blockz') {
+            this.socketService.send(JSON.parse('{"type": "createGame", "game": "' + this.dataService.blockzUser.game.replace(' ', '-') + '"}'));
+            this.socketService.statusEmitter.subscribe((message: StatusMessage) => {
+                if (message.statusCode === 199) { // See the status codes in StatusMessage.ts
+                    this.infoText = '';
+                    this.router.navigateByUrl('game');
+                } else {
+                    this.infoText = message.message;
+                }
+            });
+        } else {
+            // CODE FOR DRAW-GAME
+            this.socketService.statusEmitter.subscribe((message: StatusMessage) => {
+                if (message.statusCode === 199) { // See the status codes in StatusMessage.ts
+                    this.infoText = '';
+                    this.router.navigateByUrl('lobby');
+                } else {
+                    this.infoText = message.message;
+                }
+            });
+        }
     }
 }

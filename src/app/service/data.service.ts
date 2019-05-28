@@ -6,5 +6,6 @@ import {BlockzUser} from '../classes/blockz-user';
 })
 export class DataService {
   blockzUser: BlockzUser = new BlockzUser();
+  chosenGame: string = '';
   constructor() { }
 }

@@ -1,5 +1,12 @@
 <div class = "container">
-    <div class = "loginContainer">
+    <div *ngIf="!gameSelected" class="gamesSelection">
+        <div class="nes-container is-dark with-title">
+            <button (click)="chooseGame('blockz')" class="nes-btn is-warning" type="button">Block Game</button>
+            <button (click)="chooseGame('draw')" class="nes-btn is-warning" type="button">Guessing Game</button>
+
+        </div>
+    </div>
+    <div *ngIf="gameSelected" class="loginContainer">
     <div class="nes-container with-title is-centered">
         <div class="nes-field">
             <label for="name_field">Username</label>
