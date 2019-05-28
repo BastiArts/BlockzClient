@@ -1,3 +1,7 @@
-<p>
-    lobby works!
-</p>
+<div id="lobbyWrapper">
+    <div class="playerWrapper">
+        <div *ngFor="let user of this.players" class="nes-container is-centered">
+            <p>{{user.username}}</p>
+        </div>
+    </div>
+</div>

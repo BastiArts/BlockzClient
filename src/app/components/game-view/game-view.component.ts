@@ -19,7 +19,7 @@ export class GameViewComponent implements OnInit {
     ngOnInit() {
         this.socketService.send(JSON.parse('{"type": "getGames"}'));
         this.socketService.infoEmitter.subscribe(info => {
-            if (info.type === 'games' && info.games != null) {
+            if (info.games != null) {
                 this.games = info.games;
             }
         });
@@ -31,10 +31,17 @@ export class GameViewComponent implements OnInit {
         this.router.navigate(['games/create']);
     }
 
-    joinGame(game: Game) {
+    joinGame(gameID: string) {
         // Join Game logic
-        this.socketService.send(JSON.parse('{"type": "join", "game": "' + game.gameID + '"}'));
-        this.dataservice.blockzUser.game = game.gameID;
-        this.router.navigateByUrl('game');
+        if (this.dataservice.chosenGame === 'blockz') {
+            this.socketService.send(JSON.parse('{"type": "join", "game": "' + gameID + '"}'));
+            this.dataservice.blockzUser.game = gameID;
+            this.router.navigateByUrl('game');
+        } else if (this.dataservice.chosenGame === 'draw') {
+            this.socketService.send(JSON.parse('{"type": "joinLobby", "lobbyID": "' + gameID + '"}'));
+            this.dataservice.blockzUser.game = gameID;
+            this.router.navigateByUrl('lobby');
+        }
+
     }
 }

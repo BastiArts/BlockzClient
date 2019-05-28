@@ -63,6 +63,10 @@ export class SocketService {
                 this.gameEmitter.emit(new GameConfig(object.game, object.players, object.cubes));
                 break;
             default:
+                if (object.games != null) {
+                    console.log(object.games.length);
+                    this.infoEmitter.emit(object);
+                }
                 break;
         }
 

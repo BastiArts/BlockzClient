@@ -3,7 +3,8 @@
 		<div class="nes-container with-title is-rounded">
 			<p class="title">Games</p>
 			<div id="gamesWrapper">
-				<div (click)="joinGame(g)" *ngFor="let g of this.games" class="gameItem nes-container is-centered">
+				<div (click)="joinGame(g.gameID)" *ngFor="let g of this.games"
+					 class="gameItem nes-container is-centered">
 					{{g.gameID}}
 				</div>
 			</div>

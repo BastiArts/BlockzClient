@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {DrawPlayer} from '../../../classes/draw/draw-player';
+import {DataService} from '../../../service/data.service';
 
 @Component({
     selector: 'app-lobby',
@@ -6,11 +8,13 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./lobby.component.css']
 })
 export class LobbyComponent implements OnInit {
+    players: Array<DrawPlayer> = [];
 
-    constructor() {
+    constructor(public dataservice: DataService) {
     }
 
     ngOnInit() {
+        this.players.push(new DrawPlayer(this.dataservice.blockzUser.username, this.dataservice.blockzUser.game));
     }
 
 }

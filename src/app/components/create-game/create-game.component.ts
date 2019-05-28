@@ -19,6 +19,7 @@ export class CreateGameComponent implements OnInit {
     }
 
     createGame() {
+
         if (this.dataService.chosenGame === 'blockz') {
             this.socketService.send(JSON.parse('{"type": "createGame", "game": "' + this.dataService.blockzUser.game.replace(' ', '-') + '"}'));
             this.socketService.statusEmitter.subscribe((message: StatusMessage) => {
@@ -31,6 +32,7 @@ export class CreateGameComponent implements OnInit {
             });
         } else {
             // CODE FOR DRAW-GAME
+            this.socketService.send(JSON.parse('{"type": "createGame", "lobbyID": "' + this.dataService.blockzUser.game.replace(' ', '-') + '", "maxPlayers": ' + this.dataService.maxPlayers + '}'));
             this.socketService.statusEmitter.subscribe((message: StatusMessage) => {
                 if (message.statusCode === 199) { // See the status codes in StatusMessage.ts
                     this.infoText = '';
