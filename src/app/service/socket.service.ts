@@ -1,6 +1,7 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {StatusMessage} from '../classes/status-message';
 import {GameConfig} from '../classes/game-config';
+import {DataService} from './data.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,10 +17,14 @@ export class SocketService {
 
     @Output()
     statusEmitter: EventEmitter<StatusMessage> = new EventEmitter(true);
+
     @Output()
     infoEmitter: EventEmitter<string> = new EventEmitter(true);
 
-    constructor() {
+    @Output()
+    joinEmitter: EventEmitter<object> = new EventEmitter(true);
+
+    constructor(private dataService: DataService) {
     }
 
     connect(uri: string) {
@@ -62,10 +67,15 @@ export class SocketService {
             case 'update':
                 this.gameEmitter.emit(new GameConfig(object.game, object.players, object.cubes));
                 break;
+            case 'join':
+                this.joinEmitter.emit(object);
+                break;
             default:
                 if (object.games != null) {
                     console.log(object.games.length);
                     this.infoEmitter.emit(object);
+                } else if (object.receiveSession != null) {
+                    this.dataService.blockzUser.sessionID = object.receiveSession;
                 }
                 break;
         }
