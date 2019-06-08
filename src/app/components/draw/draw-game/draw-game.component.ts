@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {DataService} from '../../../service/data.service';
 
 @Component({
     selector: 'app-draw-game',
@@ -7,10 +8,11 @@ import {Component, OnInit} from '@angular/core';
 })
 export class DrawGameComponent implements OnInit {
 
-    constructor() {
+    constructor(public dataservice: DataService) {
     }
 
     ngOnInit() {
+
     }
 
 }
