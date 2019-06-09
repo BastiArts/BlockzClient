@@ -16,11 +16,11 @@ export class DataService {
     constructor() {
     }
 
-    static decodeString(text) {
+    decodeString(text) {
         return decodeURIComponent(text);
     }
 
-    static encodeString(text) {
+    encodeString(text) {
         return encodeURIComponent(text);
     }
 }

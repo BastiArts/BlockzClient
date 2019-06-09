@@ -1,6 +1,6 @@
 <chatBar></chatBar>
 <div class="info">
-	<p>Game: {{DataService.decodeString(dataservice.blockzUser.game)}}</p>
+	<p>Game: {{dataservice.decodeString(dataservice.blockzUser.game)}}</p>
 	<p>Players: {{dataservice.players.length}}</p>
-	<p>Topic: Baum</p>
+	<p *ngIf="this.dataservice.blockzUser.role === 'DRAWER'" style="color: red">Topic: Baum</p>
 </div>
