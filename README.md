@@ -1,7 +1,7 @@
 # StatusCodes
-155 - Word guessed
-199 - Game successfully created
-499 - Game already exists
+**155** - Word guessed  
+**199** - Game successfully created  
+**499** - Game already exists  
 
 # BlockzClient
 
