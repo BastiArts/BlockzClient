@@ -19,7 +19,7 @@ export class CreateGameComponent implements OnInit {
     }
 
     createGame() {
-
+        this.dataService.blockzUser.game = encodeURIComponent(this.dataService.blockzUser.game);
         if (this.dataService.chosenGame === 'blockz') {
             this.socketService.send(JSON.parse('{"type": "createGame", "game": "' + this.dataService.blockzUser.game.replace(' ', '-') + '"}'));
             this.socketService.statusEmitter.subscribe((message: StatusMessage) => {

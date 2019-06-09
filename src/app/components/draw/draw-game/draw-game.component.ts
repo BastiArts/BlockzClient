@@ -22,9 +22,6 @@ export class DrawGameComponent implements OnInit {
                 this.router.navigate(['login']);
             }
         });
-
-
     }
-
 
 }

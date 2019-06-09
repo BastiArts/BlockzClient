@@ -1,4 +1,6 @@
 <chatBar></chatBar>
-<p>
-	Game: {{dataservice.blockzUser.game}}
-</p>
+<div class="info">
+	<p>Game: {{DataService.decodeString(dataservice.blockzUser.game)}}</p>
+	<p>Players: {{dataservice.players.length}}</p>
+	<p>Topic: Baum</p>
+</div>

@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
     loginNewPlayer() {
         if (this.dataservice.blockzUser.username !== '') {
-            this.socketService.send(JSON.parse('{"type": "login", "username": "' + this.dataservice.blockzUser.username + '"}'));
+            this.socketService.send(JSON.parse('{"type": "login", "username": "' + encodeURIComponent(this.dataservice.blockzUser.username) + '"}'));
             this.router.navigate(['games']);
         }
     }

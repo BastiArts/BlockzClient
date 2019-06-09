@@ -53,4 +53,8 @@ export class LobbyComponent implements OnInit {
         }
     }
 
+    decodeUsername(user) {
+        return decodeURIComponent(user.username);
+    }
+
 }

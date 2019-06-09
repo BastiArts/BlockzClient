@@ -8,13 +8,14 @@
 				<div [ngClass]="m.sender === this.dataservice.blockzUser.sessionID ? 'message own' : 'message other'">
 					<div class="name">{{resolveDisplayName(m)}}</div>
 					<div class="msgBody">
-						{{m.message}}
+						{{decodeMessage(m)}}
 					</div>
 				</div>
 			</li>
 		</ul>
 	</div>
 	<div id="textFieldWrapper">
+		<!--  *ngIf="dataservice.blockzUser.role === 'GUESSER'" to allow only guesser to chat -->
 		<input (keydown.enter)="sendMessage()" [(ngModel)]="messageToChat" id="chatField" placeholder="Guesses..."
 			   type="text">
 	</div>

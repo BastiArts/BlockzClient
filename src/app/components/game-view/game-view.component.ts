@@ -23,6 +23,7 @@ export class GameViewComponent implements OnInit {
                 this.games = info.games;
             }
         });
+        this.dataservice.blockzUser.game = decodeURIComponent(this.dataservice.blockzUser.game);
     }
 
     createGame() {
@@ -43,5 +44,9 @@ export class GameViewComponent implements OnInit {
             this.router.navigateByUrl('lobby');
         }
 
+    }
+
+    resolveGameID(g: Game) {
+        return decodeURIComponent(g.gameID);
     }
 }

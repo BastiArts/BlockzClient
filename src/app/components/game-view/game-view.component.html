@@ -5,7 +5,7 @@
 			<div id="gamesWrapper">
 				<div (click)="joinGame(g.gameID)" *ngFor="let g of this.games"
 					 class="gameItem nes-container is-centered">
-					{{g.gameID}}
+					{{resolveGameID(g)}}
 				</div>
 			</div>
 		</div>
