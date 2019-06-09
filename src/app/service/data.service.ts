@@ -10,5 +10,8 @@ export class DataService {
   chosenGame: string = '';
   // For the Lobby-Size
   maxPlayers: number = -1;
+  // Players in the current Game
+  players: Array<object> = [];
+
   constructor() { }
 }

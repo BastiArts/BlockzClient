@@ -27,6 +27,9 @@ export class SocketService {
     @Output()
     joinEmitter: EventEmitter<object> = new EventEmitter(true);
 
+    @Output()
+    chatEmitter: EventEmitter<object> = new EventEmitter(true);
+
     constructor(private dataService: DataService) {
     }
 
@@ -75,6 +78,9 @@ export class SocketService {
                 break;
             case 'start':
                 this.drawGameEmitter.emit(object);
+                break;
+            case 'chat':
+                this.chatEmitter.emit(object);
                 break;
             default:
                 if (object.games != null) {

@@ -1,0 +1,21 @@
+<div id="sidebar">
+	<div id="header">
+		<div id="title">CHAT</div>
+	</div>
+	<div id="messageContainer">
+		<ul>
+			<li *ngFor="let m of this.history">
+				<div [ngClass]="m.sender === this.dataservice.blockzUser.sessionID ? 'message own' : 'message other'">
+					<div class="name">{{resolveDisplayName(m)}}</div>
+					<div class="msgBody">
+						{{m.message}}
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div id="textFieldWrapper">
+		<input (keydown.enter)="sendMessage()" [(ngModel)]="messageToChat" id="chatField" placeholder="Guesses..."
+			   type="text">
+	</div>
+</div>

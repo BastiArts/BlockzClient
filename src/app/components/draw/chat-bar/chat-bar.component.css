@@ -1,0 +1,82 @@
+#sidebar {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-width: 250px;
+    max-width: 300px;
+    height: 100%;
+    float: right;
+}
+
+#header {
+    width: calc(100% - 20px);
+    padding: 20px 20px 15px 20px;
+    text-align: center;
+    border-bottom: 2px solid black;
+}
+
+#messageContainer {
+    margin-top: 10px;
+    padding: 5px;
+    height: calc(100% - 140px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#messageContainer ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+#messageContainer ul li {
+    width: 100%;
+    height: 100%;
+}
+
+.message {
+    width: 100%;
+    height: 100%;
+}
+
+::ng-deep #messageContainer li:not(:first-of-type) {
+    margin-top: 50px;
+}
+
+.message .msgBody {
+    width: auto;
+    padding: 5px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+.message.other .msgBody {
+    float: left;
+}
+
+.message.own .name {
+    text-align: right;
+    color: gray;
+}
+
+.message.own .msgBody {
+    background-color: rgba(0, 0, 0, 0.2);
+    float: right;
+}
+
+#textFieldWrapper {
+    bottom: 0;
+    width: 100%;
+    heigth: 50px;
+}
+
+#chatField {
+    width: calc(100% - 10px);
+    margin: 10px 5px 0 5px;
+    border-radius: 5px;
+    padding: 0 0 0 15px;
+    height: 50px;
+}

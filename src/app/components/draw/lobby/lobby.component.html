@@ -1,10 +1,13 @@
 <div id="lobbyWrapper">
-    <div class="playerWrapper">
-        <div *ngFor="let user of this.players" class="nes-container is-centered">
+	<div class="playerWrapper">
+		<div *ngFor="let user of this.dataservice.players" class="nes-container is-centered">
 			<p [class.hostPlayer]="user.sessionID === this.hostID">{{user.username}}</p>
-        </div>
-    </div>
+		</div>
+	</div>
 	<button (click)="startGame();" *ngIf="dataservice.blockzUser.sessionID === this.hostID" class="nes-btn is-success"
 			type="button">Start
 	</button>
+	<p>
+		<span *ngIf="dataservice.blockzUser.sessionID !== this.hostID">Waiting...</span>
+	</p>
 </div>

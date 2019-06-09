@@ -13,6 +13,7 @@ import {GameComponent} from './components/game/game.component';
 import {GameGuard} from './service/game.guard';
 import {LobbyComponent} from './components/draw/lobby/lobby.component';
 import {DrawGameComponent} from './components/draw/draw-game/draw-game.component';
+import {ChatBarComponent} from './components/draw/chat-bar/chat-bar.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import {DrawGameComponent} from './components/draw/draw-game/draw-game.component
         CreateGameComponent,
         GameComponent,
         LobbyComponent,
-        DrawGameComponent
+        DrawGameComponent,
+        ChatBarComponent
     ],
     imports: [
         BrowserModule,
