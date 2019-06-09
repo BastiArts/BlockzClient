@@ -5,10 +5,17 @@
 	<div id="messageContainer">
 		<ul>
 			<li *ngFor="let m of this.history">
-				<div [ngClass]="m.sender === this.dataservice.blockzUser.sessionID ? 'message own' : 'message other'">
-					<div class="name">{{resolveDisplayName(m)}}</div>
-					<div class="msgBody">
-						{{decodeMessage(m)}}
+				<div *ngIf="m.type === 'chat'">
+					<div [ngClass]="m.sender === this.dataservice.blockzUser.sessionID ? 'message own' : 'message other'">
+						<div class="name">{{resolveDisplayName(m)}}</div>
+						<div class="msgBody">
+							{{decodeMessage(m)}}
+						</div>
+					</div>
+				</div>
+				<div *ngIf="m.type === 'guessed'">
+					<div class="nes-container is-dark">
+						<p>{{resolveDisplayName(m) + " " + m.message}}</p>
 					</div>
 				</div>
 			</li>

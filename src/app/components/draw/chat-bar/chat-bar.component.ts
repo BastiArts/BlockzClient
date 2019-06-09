@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataService} from '../../../service/data.service';
 import {SocketService} from '../../../service/socket.service';
 import {Message} from '../../../classes/draw/message';
+import {StatusMessage} from '../../../classes/status-message';
 
 @Component({
     selector: 'chatBar',
@@ -22,6 +23,13 @@ export class ChatBarComponent implements OnInit {
             if (message.type === 'chat') {
                 const msg: Message = message;
                 this.history.push(msg);
+                this.scrollBottom();
+            }
+        });
+        this.socketService.statusEmitter.subscribe((message: StatusMessage) => {
+            if (message.statusCode === 155) { // 155 = word guessed
+                const m: Message = new Message('guessed', message.message.split('|')[0], message.message.split('|')[1]);
+                this.history.push(m);
                 this.scrollBottom();
             }
         });
