@@ -1,3 +1,8 @@
+# StatusCodes
+155 - Word guessed
+199 - Game successfully created
+499 - Game already exists
+
 # BlockzClient
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
