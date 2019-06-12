@@ -41,7 +41,7 @@ export class LobbyComponent implements OnInit {
                 this.router.navigate(['drawgame']);
             }
         });
-
+        this.dataservice.wasInLobby = true;
     }
 
     startGame() {

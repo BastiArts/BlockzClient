@@ -6,12 +6,14 @@ import {BlockzUser} from '../classes/blockz-user';
 })
 export class DataService {
     blockzUser: BlockzUser = new BlockzUser();
-    // Game Choosing
+    // GameMode Choosing (DRAW / BLOCKZ)
     chosenGame: string = '';
     // For the Lobby-Size
     maxPlayers: number = -1;
     // Players in the current Game
     players: Array<object> = [];
+    // Is in Lobby?
+    wasInLobby: boolean = false;
 
     constructor() {
     }

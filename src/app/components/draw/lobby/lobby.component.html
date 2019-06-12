@@ -1,6 +1,6 @@
 <div id="lobbyWrapper">
 	<div class="playerWrapper">
-		<div *ngFor="let user of this.dataservice.players" class="nes-container is-centered">
+		<div *ngFor="let user of this.dataservice.players" class="nes-container is-centered lobbyPlayer">
 			<p [class.hostPlayer]="user['sessionID'] === this.hostID">{{decodeUsername(user)}}</p>
 		</div>
 	</div>

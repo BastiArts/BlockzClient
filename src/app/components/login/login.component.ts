@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
 
-
     }
 
     loginNewPlayer() {
@@ -28,7 +27,7 @@ export class LoginComponent implements OnInit {
     }
 
     chooseGame(gameType: string) {
-        this.socketService.connect('ws://localhost:8025/websockets/' + gameType);
+        this.socketService.connect('ws://172.18.107.152:8025/websockets/' + gameType);
         this.dataservice.chosenGame = gameType;
         this.gameSelected = true;
     }

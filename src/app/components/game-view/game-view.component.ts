@@ -17,6 +17,7 @@ export class GameViewComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.socketService.send(JSON.parse('{"type": "getGames"}'));
         this.socketService.infoEmitter.subscribe(info => {
             if (info.games != null) {
