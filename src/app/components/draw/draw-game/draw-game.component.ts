@@ -22,6 +22,13 @@ export class DrawGameComponent implements OnInit {
                 this.router.navigate(['login']);
             }
         });
+        this.socketService.gameEmitter.subscribe(res => {
+            if (res.type === 'topic') {
+                if (this.dataservice.blockzUser.role === 'DRAWER' && res.topic !== null) {
+                    this.dataservice.topic = res.topic;
+                }
+            }
+        });
     }
 
 }

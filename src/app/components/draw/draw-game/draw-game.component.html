@@ -2,5 +2,5 @@
 <div class="info">
 	<p>Game: {{dataservice.decodeString(dataservice.blockzUser.game)}}</p>
 	<p>Players: {{dataservice.players.length}}</p>
-	<p *ngIf="this.dataservice.blockzUser.role === 'DRAWER'" style="color: red">Topic: Baum</p>
+	<p *ngIf="this.dataservice.blockzUser.role === 'DRAWER'" style="color: red">Topic: {{this.dataservice.topic}}</p>
 </div>

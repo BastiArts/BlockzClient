@@ -82,6 +82,9 @@ export class SocketService {
             case 'chat':
                 this.chatEmitter.emit(object);
                 break;
+            case 'topic':
+                this.gameEmitter.emit(object);
+                break;
             default:
                 if (object.games != null) {
                     console.log(object.games.length);

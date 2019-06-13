@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: ''
+  apiUrl: 'ws://172.18.107.152:8025/websockets/'
 };
 
 /*
