@@ -55,6 +55,13 @@ export class DrawAreaComponent implements OnInit, AfterViewInit {
                     tmpCube.position.set(res.x, res.y, res.z);
                     this.scene.add(tmpCube);
                     this.objects.push(tmpCube);
+                } else {
+                    this.objects.splice(res.removeIndex, 1);
+                    this.scene.children.forEach(c => {
+                        if (c.position.x === res.x && c.position.y === res.y && c.position.z === res.z) {
+                            this.scene.remove(c);
+                        }
+                    });
                 }
                 this.render();
             }
@@ -108,6 +115,9 @@ export class DrawAreaComponent implements OnInit, AfterViewInit {
                     if (intersect.object !== this.grid) {
                         this.scene.remove(intersect.object);
                         this.objects.splice(this.objects.indexOf(intersect.object), 1);
+                        this.socketService.send(JSON.parse('{"type": "updateGame", "game": "' + this.dataservice.blockzUser.game + '",' +
+                            '"x": ' + intersect.object.position.x + ', "y": '
+                            + intersect.object.position.y + ', "z": ' + intersect.object.position.z + ', "color": "", "mode": "remove"}'));
                     }
                     // create cube
                 } else {
