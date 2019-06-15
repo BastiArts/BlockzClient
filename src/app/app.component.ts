@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavigationStart, Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {DataService} from './service/data.service';
 import {SocketService} from './service/socket.service';
 
@@ -17,10 +17,10 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         // Listening to route-changes and send a leave!
         this.router.events.subscribe(event => {
-            if (event instanceof NavigationStart) {
+            if (event instanceof NavigationEnd) {
                 if (!event.url.endsWith('lobby') || !event.url.endsWith('game')) {
                     if (this.dataservice.wasInLobby) {
-                        
+                        this.socketService.send(JSON.parse('{"type": "leaveGame", "lobbyID": "' + this.dataservice.blockzUser.game + '"}'));
                     }
                 }
             }

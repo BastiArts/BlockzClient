@@ -28,7 +28,7 @@ export class LobbyComponent implements OnInit {
         // Gets invoked if the connection is lost to the Server
         this.socketService.connectionEmitter.subscribe(connected => {
             if (!connected) {
-                this.socketService.send(JSON.parse('{"type": "leaveGame", "game": "' + this.dataservice.blockzUser.game + '"}'));
+                //  this.socketService.send(JSON.parse('{"type": "leaveGame", "game": "' + this.dataservice.blockzUser.game + '"}'));
                 this.socketService.disconnect();
                 this.router.navigate(['login']);
             }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DataService} from '../../service/data.service';
 import {SocketService} from '../../service/socket.service';
 import {Router} from '@angular/router';
+import {environment} from '../../../environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
     }
 
     chooseGame(gameType: string) {
-        this.socketService.connect('ws://172.18.107.152:8025/websockets/' + gameType);
+        this.socketService.connect(environment.apiUrl + gameType);
         this.dataservice.chosenGame = gameType;
         this.gameSelected = true;
     }
