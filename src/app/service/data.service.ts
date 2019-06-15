@@ -14,6 +14,8 @@ export class DataService {
     players: Array<object> = [];
     // Is in Lobby?
     wasInLobby: boolean = false;
+    // Topic
+    topic: string = '';
 
     constructor() {
     }

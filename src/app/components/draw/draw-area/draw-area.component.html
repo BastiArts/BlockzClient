@@ -1,0 +1,8 @@
+<div *ngIf="this.isDrawer()" id="colorpalette">
+	<div (click)="selectColor(color)" *ngFor="let color of this.colors"
+		 [style.background-color]="'#'+color.toString(16)" class="itemWrapper">
+		<div class="colorItem">
+		</div>
+	</div>
+</div>
+<div #drawRender id="canvas"></div>

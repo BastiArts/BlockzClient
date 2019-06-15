@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
         // Listening to route-changes and send a leave!
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                if (!event.url.endsWith('lobby') || !event.url.endsWith('game')) {
+                if (!event.url.endsWith('lobby') && !event.url.endsWith('drawgame')) {
                     if (this.dataservice.wasInLobby) {
                         this.socketService.send(JSON.parse('{"type": "leaveGame", "lobbyID": "' + this.dataservice.blockzUser.game + '"}'));
                     }

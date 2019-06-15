@@ -16,7 +16,7 @@ export class SocketService {
     gameEmitter: EventEmitter<GameConfig> = new EventEmitter(true);
 
     @Output()
-    drawGameEmitter: EventEmitter<GameConfig> = new EventEmitter(true);
+    drawGameEmitter: EventEmitter<object> = new EventEmitter(true);
 
     @Output()
     statusEmitter: EventEmitter<StatusMessage> = new EventEmitter(true);
@@ -81,6 +81,12 @@ export class SocketService {
                 break;
             case 'chat':
                 this.chatEmitter.emit(object);
+                break;
+            case 'topic':
+                this.drawGameEmitter.emit(object);
+                break;
+            case 'updateGame':
+                this.drawGameEmitter.emit(object);
                 break;
             default:
                 if (object.games != null) {

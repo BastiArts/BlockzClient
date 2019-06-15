@@ -14,6 +14,7 @@ import {GameGuard} from './service/game.guard';
 import {LobbyComponent} from './components/draw/lobby/lobby.component';
 import {DrawGameComponent} from './components/draw/draw-game/draw-game.component';
 import {ChatBarComponent} from './components/draw/chat-bar/chat-bar.component';
+import {DrawAreaComponent} from './components/draw/draw-area/draw-area.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import {ChatBarComponent} from './components/draw/chat-bar/chat-bar.component';
         GameComponent,
         LobbyComponent,
         DrawGameComponent,
-        ChatBarComponent
+        ChatBarComponent,
+        DrawAreaComponent
     ],
     imports: [
         BrowserModule,

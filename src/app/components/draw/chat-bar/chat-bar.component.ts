@@ -23,7 +23,7 @@ export class ChatBarComponent implements OnInit {
             if (message.type === 'chat') {
                 const msg: Message = message;
                 this.history.push(msg);
-                this.scrollBottom();
+                // this.scrollBottom();
             }
         });
         this.socketService.statusEmitter.subscribe((message: StatusMessage) => {
@@ -36,11 +36,14 @@ export class ChatBarComponent implements OnInit {
     }
 
     sendMessage() {
-        this.socketService.send(JSON.parse('{"type": "chat", "sender": "' + this.dataservice.blockzUser.sessionID + '", "message": "' + encodeURIComponent(this.messageToChat) + '"}'));
-        this.messageToChat = '';
+        if (this.messageToChat !== '') {
+            this.socketService.send(JSON.parse('{"type": "chat", "sender": "' + this.dataservice.blockzUser.sessionID + '", "message": "' + encodeURIComponent(this.messageToChat) + '"}'));
+            this.messageToChat = '';
+        }
     }
 
     resolveDisplayName(message: Message) {
+        this.scrollBottom();
         if (message.sender === this.dataservice.blockzUser.sessionID) {
             return 'Du';
         } else {

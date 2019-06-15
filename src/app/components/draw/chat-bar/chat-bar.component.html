@@ -2,7 +2,7 @@
 	<div id="header">
 		<div id="title">CHAT</div>
 	</div>
-	<div id="messageContainer">
+	<div #chatBox id="messageContainer">
 		<ul>
 			<li *ngFor="let m of this.history">
 				<div *ngIf="m.type === 'chat'">
