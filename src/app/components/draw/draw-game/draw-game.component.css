@@ -7,3 +7,6 @@
     height: 150px;
     width: 250px;
 }
+draw-area{
+    max-width: calc(100% - 300px);
+}

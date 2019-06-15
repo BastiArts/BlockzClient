@@ -8,6 +8,7 @@ import {GameComponent} from './components/game/game.component';
 import {GameGuard} from './service/game.guard';
 import {LobbyComponent} from './components/draw/lobby/lobby.component';
 import {DrawGameComponent} from './components/draw/draw-game/draw-game.component';
+import {DrawAreaComponent} from './components/draw/draw-area/draw-area.component';
 
 const routes: Routes = [
   // Fallback route if logged in
@@ -22,6 +23,9 @@ const routes: Routes = [
         path: 'lobby', component: LobbyComponent, canActivate: [GameGuard], children: [
             {path: '**', redirectTo: 'lobby'}
         ]
+    },
+    {
+        path: 'bla', component: DrawAreaComponent
     },
     {path: 'drawgame', component: DrawGameComponent, canActivate: [GameGuard]},
   {path: 'login', component: LoginComponent},
