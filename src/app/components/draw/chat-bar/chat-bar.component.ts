@@ -3,6 +3,7 @@ import {DataService} from '../../../service/data.service';
 import {SocketService} from '../../../service/socket.service';
 import {Message} from '../../../classes/draw/message';
 import {StatusMessage} from '../../../classes/status-message';
+import {DrawGameService} from '../../../service/draw-game.service';
 
 @Component({
     selector: 'chatBar',
@@ -14,7 +15,7 @@ export class ChatBarComponent implements OnInit {
     messageToChat: string = '';
     history: Array<Message> = [];
 
-    constructor(private dataservice: DataService, private socketService: SocketService) {
+    constructor(private dataservice: DataService, private socketService: SocketService, private drawgameservice: DrawGameService) {
     }
 
     ngOnInit() {
@@ -30,6 +31,7 @@ export class ChatBarComponent implements OnInit {
             if (message.statusCode === 155) { // 155 = word guessed
                 const m: Message = new Message('guessed', message.message.split('|')[0], message.message.split('|')[1]);
                 this.history.push(m);
+                this.updateScoreBoard(m.sender);
                 this.scrollBottom();
             }
         });
@@ -45,7 +47,7 @@ export class ChatBarComponent implements OnInit {
     resolveDisplayName(message: Message) {
         this.scrollBottom();
         if (message.sender === this.dataservice.blockzUser.sessionID) {
-            return 'Du';
+            return 'You';
         } else {
             for (const o of this.dataservice.players) {
                 if (o['sessionID'] === message.sender) {
@@ -64,5 +66,13 @@ export class ChatBarComponent implements OnInit {
 
     decodeMessage(message: Message) {
         return decodeURIComponent(message.message);
+    }
+
+    updateScoreBoard(sessionID) {
+        for (const su of this.drawgameservice.getScoreboard()) {
+            if (su.sessionID === sessionID) {
+                su.score += 200;
+            }
+        }
     }
 }

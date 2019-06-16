@@ -2,6 +2,9 @@ import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} f
 import * as THREE from 'three';
 import {DataService} from '../../../service/data.service';
 import {SocketService} from '../../../service/socket.service';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+import {DrawGameService} from '../../../service/draw-game.service';
+import {ScoreboardUser} from '../../../classes/draw/scoreboard-user';
 
 
 @Component({
@@ -19,12 +22,15 @@ export class DrawAreaComponent implements OnInit, AfterViewInit {
 
     // COLORS
     private colors = [];
-    private selectedColor: string = '#4286f4';
+    minutes = 0;
 
     // Helpers
     private placementMaterial;
     private placementMesh;
     private isShift = false;
+    seconds = 0;
+    private selectedColor = '#4286f4';
+    private controls;
 
     // Cubes
     private cubeGeo;
@@ -41,7 +47,7 @@ export class DrawAreaComponent implements OnInit, AfterViewInit {
     // Objects
     private objects = [];
 
-    constructor(private dataservice: DataService, private socketService: SocketService) {
+    constructor(private dataservice: DataService, private socketService: SocketService, public drawgameservice: DrawGameService) {
     }
 
     ngOnInit() {
@@ -64,6 +70,8 @@ export class DrawAreaComponent implements OnInit, AfterViewInit {
                     });
                 }
                 this.render();
+            } else if (res.type === 'start') {
+                this.dataservice.blockzUser.role = this.dataservice.blockzUser.sessionID === res.drawer ? 'DRAWER' : 'GUESSER';
             }
         });
     }
@@ -130,9 +138,10 @@ export class DrawAreaComponent implements OnInit, AfterViewInit {
                         ' "x": ' + newCube.position.x + ', "y": ' + newCube.position.y + ',"z": ' + newCube.position.z + ', "color": "'
                         + this.selectedColor + '", "mode": "place"}'));
                 }
-                this.render();
+
             }
         }
+        this.render();
     }
 
     @HostListener('window: keydown', ['$event'])
@@ -159,6 +168,11 @@ export class DrawAreaComponent implements OnInit, AfterViewInit {
     }
 
     private init() {
+        this.initScoreboard();
+        this.objects = [];
+        this.colors = [];
+        this.scene = new THREE.Scene();
+
         // SET THE COLORS
         this.colors.push(0x4286f4);
         this.colors.push(0xf44242);
@@ -198,8 +212,51 @@ export class DrawAreaComponent implements OnInit, AfterViewInit {
         this.scene.add(this.grid);
         this.objects.push(this.grid);
 
+        // Ambient Light
         const light = new THREE.AmbientLight(0x606060);
         this.scene.add(light);
+
+        // Light for the cubes
+        const directionalLight = new THREE.DirectionalLight(0xffffff);
+        directionalLight.position.set(1, 0.75, 0.5).normalize();
+        this.scene.add(directionalLight);
+
+        // Adding the Camera controls
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+        // Adding the timer
+        let timecount = this.drawgameservice.getTimer() * 60;
+        const interv = setInterval(i => {
+            if (timecount > 0) {
+                this.minutes = Math.floor(timecount / 60);
+                this.seconds = timecount - this.minutes * 60;
+                timecount -= 1;
+            } else if (timecount == 0) {
+                this.drawgameservice.nextRound();
+                this.init();
+                // Only the drawer should send the Request
+                if (this.isDrawer()) {
+                    this.socketService.send(JSON.parse('{"type": "nextRound"}'));
+                }
+                clearInterval(interv);
+            }
+        }, 1000);
+    }
+
+    private initScoreboard() {
+        if (this.drawgameservice.getRound() === 1) {
+            for (const p of this.dataservice.players) {
+                this.drawgameservice.getScoreboard().push(new ScoreboardUser(p['sessionID'], 0));
+            }
+        }
+    }
+
+    private resolveNameFromSession(session) {
+        for (const o of this.dataservice.players) {
+            if (o['sessionID'] === session) {
+                return decodeURIComponent(o['username']);
+            }
+        }
     }
 
     private render(): void {

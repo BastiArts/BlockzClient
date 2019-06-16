@@ -5,4 +5,18 @@
 		</div>
 	</div>
 </div>
+<div id="gameinfo">
+	<div class="info">Round: {{drawgameservice.getRound()}} / {{drawgameservice.getMaxRounds()}}</div>
+	<div class="info">
+		Time: {{this.minutes}} : {{this.seconds}}
+	</div>
+	<div class="info">
+		<table>
+			<tr *ngFor="let su of this.drawgameservice.getScoreboard()">
+				<td>{{this.resolveNameFromSession(su.sessionID)}}</td>
+				<td>{{su.score}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
 <div #drawRender id="canvas"></div>

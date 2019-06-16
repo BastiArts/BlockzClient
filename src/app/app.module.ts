@@ -15,6 +15,7 @@ import {LobbyComponent} from './components/draw/lobby/lobby.component';
 import {DrawGameComponent} from './components/draw/draw-game/draw-game.component';
 import {ChatBarComponent} from './components/draw/chat-bar/chat-bar.component';
 import {DrawAreaComponent} from './components/draw/draw-area/draw-area.component';
+import {DrawGameService} from './service/draw-game.service';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,7 @@ import {DrawAreaComponent} from './components/draw/draw-area/draw-area.component
         FormsModule,
         AppRoutingModule
     ],
-    providers: [DataService, SocketService, AuthGuard, GameGuard],
+    providers: [DataService, SocketService, DrawGameService, AuthGuard, GameGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {
